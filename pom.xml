@@ -31,7 +31,7 @@
                       <goal>register</goal> 
                     </goals>
                     <configuration>
-                      <registryUrl>https://registry-apicurio-registry.apps.cluster-x5spj.x5spj.sandbox1870.opentlc.com</registryUrl> 
+                      <registryUrl>https://registry-apicurio-registry.apps.cluster-ldvg8.ldvg8.sandbox2768.opentlc.com</registryUrl> 
                       <artifacts>
                         <artifact>
                           <groupId>com.redhat</groupId>
