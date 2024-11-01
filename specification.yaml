@@ -12,7 +12,7 @@ externalDocs:
   url: https://istio.io/docs/samples/bookinfo.html
 servers:
   - url: "http://localhost:8080"
-  - url: "https://microcks-microcks.apps.cluster-x5spj.x5spj.sandbox1870.opentlc.com/rest/product-page/0.0.1"
+  - url: "https://microcks-microcks.apps.cluster-p28j5.p28j5.sandbox1687.opentlc.com/rest/product-page/0.0.1"
 tags:
 - name: product
   description: Information about a product (in this case a book)
