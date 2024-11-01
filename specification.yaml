@@ -1,251 +1,266 @@
 openapi: 3.0.1
 info:
-  title: product-page
-  description: This is the API of the Istio BookInfo sample application.
-  termsOfService: https://istio.io/
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: '1'
-externalDocs:
-  description: Learn more about the Istio BookInfo application
-  url: https://istio.io/docs/samples/bookinfo.html
+    title: product-page
+    version: '1'
+    description: This is the API of the Istio BookInfo sample application.
+    termsOfService: 'https://istio.io/'
+    license:
+        name: Apache 2.0
+        url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 servers:
-  - url: "http://localhost:8080"
-  - url: "https://microcks-microcks.apps.cluster-p28j5.p28j5.sandbox1687.opentlc.com/rest/product-page/1"
-tags:
-- name: product
-  description: Information about a product (in this case a book)
-- name: review
-  description: Review information for a product
-- name: rating
-  description: Rating information for a product
+    -
+        url: 'http://localhost:8080'
+    -
+        url: 'https://microcks-microcks.apps.cluster-p28j5.p28j5.sandbox1687.opentlc.com/rest/product-page/1'
 paths:
-  /products:
-    get:
-      tags:
-      - product
-      summary: List all products
-      description: List all products available in the application with a minimum amount
-        of information.
-      operationId: getProducts
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
-  /products/{id}:
-    get:
-      tags:
-      - product
-      summary: Get individual product
-      description: Get detailed information about an individual product with the given
-        id.
-      operationId: getProduct
-      parameters:
-      - name: id
-        in: path
-        description: Product id
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductDetails'
-        "400":
-          description: Invalid product id
-          content: {}
-  /products/{id}/reviews:
-    get:
-      tags:
-      - review
-      summary: Get reviews for a product
-      description: "Get reviews for a product, including review text and possibly\
-        \ ratings information."
-      operationId: getProductReviews
-      parameters:
-      - name: id
-        in: path
-        description: Product id
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductReviews'
-        "400":
-          description: Invalid product id
-          content: {}
-  /products/{id}/ratings:
-    get:
-      tags:
-      - rating
-      summary: Get ratings for a product
-      description: "Get ratings for a product, including stars and their color."
-      operationId: getProductRatings
-      parameters:
-      - name: id
-        in: path
-        description: Product id
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductRatings'
-        "400":
-          description: Invalid product id
-          content: {}
+    /products:
+        get:
+            tags:
+                - product
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Product'
+                            examples:
+                                products:
+                                    value:
+                                        -
+                                            id: 0
+                                            title: The Comedy of Errors
+                                            descriptionHtml: >-
+                                                <a
+                                                href="https://en.wikipedia.org/wiki/The_Comedy_of_Errors">Wikipedia
+                                                Summary</a>: The Comedy of Errors is one of <b>William
+                                                Shakespeare's</b> early plays. It is his shortest and one of
+                                                his most farcical comedies, with a major part of the humour
+                                                coming from slapstick and mistaken identity, in addition to
+                                                puns and word play.
+                    description: successful operation
+            operationId: getProducts
+            summary: List all products
+            description: List all products available in the application with a minimum amount of information.
+    '/products/{id}':
+        get:
+            tags:
+                - product
+            parameters:
+                -
+                    name: id
+                    description: Product id
+                    schema:
+                        format: int32
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProductDetails'
+                    description: successful operation
+                '400':
+                    description: Invalid product id
+            operationId: getProduct
+            summary: Get individual product
+            description: Get detailed information about an individual product with the given id.
+    '/products/{id}/reviews':
+        get:
+            tags:
+                - review
+            parameters:
+                -
+                    name: id
+                    description: Product id
+                    schema:
+                        format: int32
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProductReviews'
+                    description: successful operation
+                '400':
+                    description: Invalid product id
+            operationId: getProductReviews
+            summary: Get reviews for a product
+            description: 'Get reviews for a product, including review text and possibly ratings information.'
+    '/products/{id}/ratings':
+        get:
+            tags:
+                - rating
+            parameters:
+                -
+                    name: id
+                    description: Product id
+                    schema:
+                        format: int32
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProductRatings'
+                    description: successful operation
+                '400':
+                    description: Invalid product id
+            operationId: getProductRatings
+            summary: Get ratings for a product
+            description: 'Get ratings for a product, including stars and their color.'
 components:
-  schemas:
-    Product:
-      required:
-      - descriptionHtml
-      - id
-      - title
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Product id
-          format: int32
-        title:
-          type: string
-          description: Title of the book
-        descriptionHtml:
-          type: string
-          description: Description of the book - may contain HTML tags
-      description: Basic information about a product
-    ProductDetails:
-      required:
-      - ISBN-10
-      - ISBN-13
-      - author
-      - id
-      - language
-      - pages
-      - publisher
-      - type
-      - year
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Product id
-          format: int32
-        publisher:
-          type: string
-          description: Publisher of the book
-        language:
-          type: string
-          description: Language of the book
-        author:
-          type: string
-          description: Author of the book
-        ISBN-10:
-          type: string
-          description: ISBN-10 of the book
-        ISBN-13:
-          type: string
-          description: ISBN-13 of the book
-        year:
-          type: integer
-          description: Year the book was first published in
-          format: int32
-        type:
-          type: string
-          description: Type of the book
-          enum:
-          - paperback
-          - hardcover
-        pages:
-          type: integer
-          description: Number of pages of the book
-          format: int32
-      description: Detailed information about a product
-    ProductReviews:
-      required:
-      - id
-      - reviews
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Product id
-          format: int32
-        reviews:
-          type: array
-          description: List of reviews
-          items:
-            $ref: '#/components/schemas/Review'
-      description: Object containing reviews for a product
-    Review:
-      required:
-      - reviewer
-      - text
-      type: object
-      properties:
-        reviewer:
-          type: string
-          description: Name of the reviewer
-        text:
-          type: string
-          description: Review text
-        rating:
-          $ref: '#/components/schemas/Rating'
-      description: Review of a product
-    Rating:
-      required:
-      - color
-      - stars
-      type: object
-      properties:
-        stars:
-          maximum: 5
-          minimum: 1
-          type: integer
-          description: Number of stars
-          format: int32
-        color:
-          type: string
-          description: Color in which stars should be displayed
-          enum:
-          - red
-          - black
-      description: Rating of a product
-    ProductRatings:
-      required:
-      - id
-      - ratings
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Product id
-          format: int32
-        ratings:
-          type: object
-          additionalProperties:
-            type: string
-          description: "A hashmap where keys are reviewer names, values are number\
-            \ of stars"
-      description: Object containing ratings of a product
+    schemas:
+        Product:
+            description: Basic information about a product
+            required:
+                - descriptionHtml
+                - id
+                - title
+            type: object
+            properties:
+                id:
+                    format: int32
+                    description: Product id
+                    type: integer
+                title:
+                    description: Title of the book
+                    type: string
+                descriptionHtml:
+                    description: Description of the book - may contain HTML tags
+                    type: string
+        ProductDetails:
+            description: Detailed information about a product
+            required:
+                - ISBN-10
+                - ISBN-13
+                - author
+                - id
+                - language
+                - pages
+                - publisher
+                - type
+                - year
+            type: object
+            properties:
+                id:
+                    format: int32
+                    description: Product id
+                    type: integer
+                publisher:
+                    description: Publisher of the book
+                    type: string
+                language:
+                    description: Language of the book
+                    type: string
+                author:
+                    description: Author of the book
+                    type: string
+                ISBN-10:
+                    description: ISBN-10 of the book
+                    type: string
+                ISBN-13:
+                    description: ISBN-13 of the book
+                    type: string
+                year:
+                    format: int32
+                    description: Year the book was first published in
+                    type: integer
+                type:
+                    description: Type of the book
+                    enum:
+                        - paperback
+                        - hardcover
+                    type: string
+                pages:
+                    format: int32
+                    description: Number of pages of the book
+                    type: integer
+        ProductReviews:
+            description: Object containing reviews for a product
+            required:
+                - id
+                - reviews
+            type: object
+            properties:
+                id:
+                    format: int32
+                    description: Product id
+                    type: integer
+                reviews:
+                    description: List of reviews
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Review'
+        Review:
+            description: Review of a product
+            required:
+                - reviewer
+                - text
+            type: object
+            properties:
+                reviewer:
+                    description: Name of the reviewer
+                    type: string
+                text:
+                    description: Review text
+                    type: string
+                rating:
+                    $ref: '#/components/schemas/Rating'
+        Rating:
+            description: Rating of a product
+            required:
+                - color
+                - stars
+            type: object
+            properties:
+                stars:
+                    format: int32
+                    description: Number of stars
+                    maximum: 5
+                    minimum: 1
+                    type: integer
+                color:
+                    description: Color in which stars should be displayed
+                    enum:
+                        - red
+                        - black
+                    type: string
+        ProductRatings:
+            description: Object containing ratings of a product
+            required:
+                - id
+                - ratings
+            type: object
+            properties:
+                id:
+                    format: int32
+                    description: Product id
+                    type: integer
+                ratings:
+                    description: 'A hashmap where keys are reviewer names, values are number of stars'
+                    type: object
+                    additionalProperties:
+                        type: string
+tags:
+    -
+        name: product
+        description: Information about a product (in this case a book)
+    -
+        name: review
+        description: Review information for a product
+    -
+        name: rating
+        description: Rating information for a product
+externalDocs:
+    description: Learn more about the Istio BookInfo application
+    url: 'https://istio.io/docs/samples/bookinfo.html'
