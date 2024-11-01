@@ -1,18 +1,18 @@
 openapi: 3.0.1
 info:
-  title: BookInfo API
+  title: product-page
   description: This is the API of the Istio BookInfo sample application.
   termsOfService: https://istio.io/
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
+  version: 1
 externalDocs:
   description: Learn more about the Istio BookInfo application
   url: https://istio.io/docs/samples/bookinfo.html
 servers:
   - url: "http://localhost:8080"
-  - url: "https://microcks-microcks.apps.cluster-p28j5.p28j5.sandbox1687.opentlc.com/rest/product-page/0.0.1"
+  - url: "https://microcks-microcks.apps.cluster-p28j5.p28j5.sandbox1687.opentlc.com/rest/product-page/1"
 tags:
 - name: product
   description: Information about a product (in this case a book)
